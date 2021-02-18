@@ -27,6 +27,7 @@ double dslash_kernel(int nrep,Simd *Up,Simd *outp,Simd *inp,uint64_t *nbr,uint64
       #if defined(SVE)
         #pragma message ("RRII kernel using SVE ACLE")
         #include "arch/sve/rrii/SVE_rrii.h"
+        //#include "arch/sve/rrii/rrii_kernel.cpp"
       #endif
       #if defined(AVX512)
         #pragma message ("RRII kernel using AVX512 intrinsics")
@@ -60,6 +61,7 @@ double dslash_kernel(int nrep,Simd *Up,Simd *outp,Simd *inp,uint64_t *nbr,uint64
       #if defined(SVE)
         #pragma message ("RIRI kernel using SVE ACLE")
         #include "arch/sve/riri/SVE_riri.h"
+        //#include "arch/sve/riri/riri_kernel.cpp"
       #endif
       #if defined(AVX512)
         #pragma message ("RIRI kernel using AVX512 intrinsics")
@@ -82,6 +84,6 @@ double dslash_kernel(int nrep,Simd *Up,Simd *outp,Simd *inp,uint64_t *nbr,uint64
 template<class Simd>
 double dslash_kernel(int nrep,Simd *Up,Simd *outp,Simd *inp,uint64_t *nbr,uint64_t nsite,uint64_t Ls,uint8_t *prm,int psi_pf_dist_L1, int psi_pf_dist_L2, int u_pf_dist_L2)
 {
-  return dslash_kernel_cpu(nrep,Up,outp,inp,nbr,nsite,Ls,prm,psi_pf_dist_L1,psi_pf_dist_L2,u_pf_dist_L2);
+  return dslash_kernel_cpu_JL(nrep,Up,outp,inp,nbr,nsite,Ls,prm,psi_pf_dist_L1,psi_pf_dist_L2,u_pf_dist_L2);
 }
 #endif

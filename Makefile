@@ -141,7 +141,8 @@ bench.rrii.sve.gccvectors.gcc: bench_file.cc  WilsonKernelsHand.h Makefile arch/
 	$(CXX) $(RRII_CXXFLAGS_SVE_GCC) $(CXXFLAGS_SVE_NOSCHED_GCC) bench_file.cc $(LDLIBS) $(LDFLAGS) -o bench.rrii.sve.gccvectors.gcc
 
 bench.rrii.sve.intrinsics.gcc: bench_file.cc   WilsonKernelsHand.h Makefile arch/sve/rrii/SVE_rrii.h
-	$(CXX) $(RRII_CXXFLAGS_SVE_INTRIN_GCC) $(CXXFLAGS_SVE_O1) bench_file.cc $(LDLIBS) $(LDFLAGS) -o bench.rrii.sve.intrinsics.gcc
+	#$(CXX) $(RRII_CXXFLAGS_SVE_INTRIN_GCC) $(CXXFLAGS_SVE_O1) bench_file.cc $(LDLIBS) $(LDFLAGS) -o bench.rrii.sve.intrinsics.gcc
+	$(CXX) $(RRII_CXXFLAGS_SVE_INTRIN_GCC) $(CXXFLAGS_SVE_O1) -c arch/sve/rrii/rrii_kernel.cpp -o kernel.rrii.sve.intrinsics.gcc.o
 
 bench.rrii.sve.intrinsics.armclang: bench_file.cc  WilsonKernelsHand.h Makefile arch/sve/rrii/SVE_rrii.h
 	$(CXX) $(RRII_CXXFLAGS_SVE_INTRIN_ARMCLANG) $(CXXFLAGS_SVE_O3) bench_file.cc $(LDLIBS) $(LDFLAGS) -o bench.rrii.sve.intrinsics.armclang
@@ -167,7 +168,13 @@ bench.rrii.sve.intrinsics.fcc: bench_file.cc  WilsonKernelsHand.h Makefile arch/
 #	$(CXX) $(RIRI_CXXFLAGS_SVE_INTRIN_GCC) $(CXXFLAGS_SVE_O1) bench_static.cc $(RIRI_DATA_SVE) $(LDLIBS) $(LDFLAGS) -o bench.riri.sve.intrinsics.gcc
 
 bench.riri.sve.intrinsics.gcc: bench_file.cc WilsonKernelsHand.h Makefile arch/sve/riri/wi.h arch/sve/riri/SVE_riri.h
-	$(CXX) $(RIRI_CXXFLAGS_SVE_INTRIN_GCC) $(CXXFLAGS_SVE_O1) bench_file.cc $(LDLIBS) $(LDFLAGS) -o bench.riri.sve.intrinsics.gcc
+	#$(CXX) $(RIRI_CXXFLAGS_SVE_INTRIN_GCC) $(CXXFLAGS_SVE_O1) -fopenmp -c bench_file.cc -o bench_file.o
+	#$(CXX) bench_file.o kernel.riri.sve.intrinsics.gcc.o -fopenmp $(LDLIBS) $(LDFLAGS) -o bench.riri.sve.intrinsics.gcc
+	#$(CXX) $(RIRI_CXXFLAGS_SVE_INTRIN_GCC) $(CXXFLAGS_SVE_O1) bench_file.cc kernel.riri.sve.intrinsics.o $(LDLIBS) $(LDFLAGS) -o bench.riri.sve.intrinsics.gcc
+	$(CXX) $(RIRI_CXXFLAGS_SVE_INTRIN_GCC) $(CXXFLAGS_SVE_O1) -c arch/sve/riri/riri_kernel.cpp -o kernel.riri.sve.intrinsics.gcc.o
+
+
+	#$(CXX) $(RIRI_CXXFLAGS_SVE_INTRIN_GCC) $(CXXFLAGS_SVE_O1) -nostdinc -isystem /vol0001/apps/oss/spack-v0.15.4/opt/spack/linux-rhel8-a64fx/gcc-8.3.1/gcc-10.1.0-2wrm3no2w6uzicvmvrozdz4xhu6nsj7t/include/c++/10.1.0/tr1 -isystem /vol0001/apps/oss/spack-v0.15.4/opt/spack/linux-rhel8-a64fx/gcc-8.3.1/gcc-10.1.0-2wrm3no2w6uzicvmvrozdz4xhu6nsj7t/include/c++/10.1.0 -c arch/sve/riri/riri_kernel.c -o kernel.riri.sve.intrinsics.gcc.o
 
 bench.riri.sve.intrinsics.fcc: bench_file.cc  WilsonKernelsHand.h Makefile arch/sve/riri/SVE_riri.h
 	$(CXX) $(RIRI_CXXFLAGS_SVE_INTRIN_FCC) bench_file.cc $(LDLIBS) $(LDFLAGS) -o bench.riri.sve.intrinsics.fcc
